@@ -3,6 +3,7 @@ package com.yjp.eduservice.service.impl;
 import com.yjp.eduservice.entity.EduCourse;
 import com.yjp.eduservice.entity.EduCourseDescription;
 import com.yjp.eduservice.entity.vo.CourseInfoVo;
+import com.yjp.eduservice.entity.vo.CoursePublishVo;
 import com.yjp.eduservice.mapper.EduCourseMapper;
 import com.yjp.eduservice.service.EduCourseDescriptionService;
 import com.yjp.eduservice.service.EduCourseService;
@@ -77,4 +78,12 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
         Description.setDescription(courseInfoVo.getDescription());
         eduCourseDescriptionService.updateById(Description);
     }
+
+    @Override
+    public CoursePublishVo publishCourseInfo(String id) {
+        CoursePublishVo coursePublishVo = baseMapper.getPublishCourseInfo(id);
+        return coursePublishVo;
+    }
+
+
 }

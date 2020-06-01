@@ -2,11 +2,15 @@ package com.yjp.eduservice.controller;
 
 
 import com.yjp.commonutils.R;
+import com.yjp.eduservice.entity.EduCourse;
 import com.yjp.eduservice.entity.vo.CourseInfoVo;
+import com.yjp.eduservice.entity.vo.CoursePublishVo;
 import com.yjp.eduservice.service.EduCourseService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -24,6 +28,13 @@ public class EduCourseController {
     @Autowired
     private EduCourseService eduCourseService;
 
+    //课程列表
+    @GetMapping("")
+    public R getCourseList(){
+        List<EduCourse> eduCourseList = eduCourseService.list(null);
+        return R.ok().data("list",eduCourseList);
+    }
+
     @PostMapping("addCourseInfo")
     public R addCourseInfo(@RequestBody CourseInfoVo courseInfoVo){
         String id = eduCourseService.saveCourseInfo(courseInfoVo);
@@ -39,6 +50,21 @@ public class EduCourseController {
     @PostMapping("updateCourseInfo")
     public R updateCourseInfo(@RequestBody CourseInfoVo courseInfoVo){
         eduCourseService.updateCourseInfo(courseInfoVo);
+        return R.ok();
+    }
+
+    @GetMapping("getPublishCourseInfo/{id}")
+    public R getPublishCourseInfo(@PathVariable String id){
+        CoursePublishVo coursePublishVo = eduCourseService.publishCourseInfo(id);
+        return R.ok().data("PublishCourseInfo",coursePublishVo);
+    }
+
+    @PostMapping("publishCourse/{id}")
+    public R PublishCourse(@PathVariable String id){
+        EduCourse eduCourse = new EduCourse();
+        eduCourse.setId(id);
+        eduCourse.setStatus("Normal");
+        eduCourseService.updateById(eduCourse);
         return R.ok();
     }
 }
