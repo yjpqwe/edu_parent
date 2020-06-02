@@ -1,5 +1,6 @@
 package com.yjp.eduservice.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yjp.eduservice.entity.EduVideo;
 import com.yjp.eduservice.mapper.EduVideoMapper;
 import com.yjp.eduservice.service.EduVideoService;
@@ -17,4 +18,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class EduVideoServiceImpl extends ServiceImpl<EduVideoMapper, EduVideo> implements EduVideoService {
 
+    @Override
+    public void removeVideoByCourseId(String courseId) {
+        QueryWrapper<EduVideo> wrapper = new QueryWrapper<>();
+        wrapper.eq("course_id",courseId);
+        baseMapper.delete(wrapper);
+    }
 }

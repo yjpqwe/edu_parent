@@ -5,9 +5,11 @@ import com.yjp.eduservice.entity.EduCourseDescription;
 import com.yjp.eduservice.entity.vo.CourseInfoVo;
 import com.yjp.eduservice.entity.vo.CoursePublishVo;
 import com.yjp.eduservice.mapper.EduCourseMapper;
+import com.yjp.eduservice.service.EduChapterService;
 import com.yjp.eduservice.service.EduCourseDescriptionService;
 import com.yjp.eduservice.service.EduCourseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.yjp.eduservice.service.EduVideoService;
 import com.yjp.servicebase.exceptionhandler.YjpException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,10 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
 
     @Autowired
     private EduCourseDescriptionService eduCourseDescriptionService;
+    @Autowired
+    private EduVideoService eduVideoService;
+    @Autowired
+    private EduChapterService eduChapterService;
 
     @Override
     public String saveCourseInfo(CourseInfoVo courseInfoVo) {
@@ -83,6 +89,17 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     public CoursePublishVo publishCourseInfo(String id) {
         CoursePublishVo coursePublishVo = baseMapper.getPublishCourseInfo(id);
         return coursePublishVo;
+    }
+
+    @Override
+    public void removeCourse(String courseId) {
+        //1.根据课程id删除小节
+        eduVideoService.removeVideoByCourseId(courseId);
+        //2.根据课程id删除章节
+        
+        //3.根据课程id删除描述
+
+        //4.根据课程id删除课程本身
     }
 
 

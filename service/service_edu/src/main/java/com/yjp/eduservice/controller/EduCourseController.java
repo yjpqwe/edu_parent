@@ -29,7 +29,8 @@ public class EduCourseController {
     private EduCourseService eduCourseService;
 
     //课程列表
-    @GetMapping("")
+    //完善条件查询带分页
+    @GetMapping
     public R getCourseList(){
         List<EduCourse> eduCourseList = eduCourseService.list(null);
         return R.ok().data("list",eduCourseList);
@@ -65,6 +66,12 @@ public class EduCourseController {
         eduCourse.setId(id);
         eduCourse.setStatus("Normal");
         eduCourseService.updateById(eduCourse);
+        return R.ok();
+    }
+
+    @DeleteMapping("{courseId}")
+    public R deleteCourse(@PathVariable String courseId){
+        eduCourseService.removeCourse(courseId);
         return R.ok();
     }
 }
