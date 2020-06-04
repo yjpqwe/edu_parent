@@ -14,6 +14,7 @@ import com.yjp.servicebase.exceptionhandler.YjpException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -92,14 +93,21 @@ public class EduCourseServiceImpl extends ServiceImpl<EduCourseMapper, EduCourse
     }
 
     @Override
+    @Transactional
     public void removeCourse(String courseId) {
         //1.根据课程id删除小节
         eduVideoService.removeVideoByCourseId(courseId);
         //2.根据课程id删除章节
+        eduChapterService.removeChapterByCourseId(courseId);
         
         //3.根据课程id删除描述
+        eduCourseDescriptionService.removeById(courseId);
 
         //4.根据课程id删除课程本身
+        int result = baseMapper.deleteById(courseId);
+        if(result == 0){
+            throw new YjpException(20001,"删除失败");
+        }
     }
 
 
