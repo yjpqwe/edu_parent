@@ -2,9 +2,11 @@ package com.yjp.eduservice.controller;
 
 
 import com.yjp.commonutils.R;
+import com.yjp.eduservice.client.VodClient;
 import com.yjp.eduservice.entity.EduVideo;
 import com.yjp.eduservice.service.EduVideoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
 public class EduVideoController {
     @Autowired
     private EduVideoService eduVideoService;
+    @Autowired
+    private VodClient vodClient;
 
     @PostMapping("addVideo")
     private R addVideo(@RequestBody EduVideo eduVideo){
@@ -29,9 +33,16 @@ public class EduVideoController {
     }
 
     //删除小节
-    //后面完善，删除小节同时要把视频删除
+    //删除小节同时要把视频删除
     @DeleteMapping("{id}")
     private R deleteVideo(@PathVariable String id){
+        EduVideo eduVideo = eduVideoService.getById(id);
+        String videoSourceId = eduVideo.getVideoSourceId();
+        //判断小节中是否有视频id
+        if(!StringUtils.isEmpty(videoSourceId)){
+            //根据视频id远程调用实现视频删除
+            vodClient.removeAlyVideo(videoSourceId);
+        }
         boolean flag = eduVideoService.removeById(id);
         if(flag){
             return R.ok();
