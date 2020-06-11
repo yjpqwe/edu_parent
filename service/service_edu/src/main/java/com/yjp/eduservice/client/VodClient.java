@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@FeignClient("service-vod")
+@FeignClient(name = "service-vod",fallback = VodFileDegradeFeignClient.class)
 @Component
 public interface VodClient {
     //PathVariable路径中一定要指定参数名称，否则会出错
