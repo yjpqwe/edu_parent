@@ -7,9 +7,12 @@ import com.yjp.servicebase.exceptionhandler.YjpException;
 import com.yjp.vod.service.VodService;
 import com.yjp.vod.utils.ConstantVodUtils;
 import com.yjp.vod.utils.InitVodCilent;
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/eduvod/video")
@@ -42,5 +45,13 @@ public class VodController {
             e.printStackTrace();
             throw new YjpException(20001,"删除视频失败");
         }
+    }
+
+    //删除多个阿里云视频的方法
+    //参数多个视频id  List videoIdList
+    @DeleteMapping("delete-batch")
+    public R deleteBatch(@RequestParam("videoIdList") List<String> videoIdList){
+        vodService.removeMoreAlyVideo(videoIdList);
+        return R.ok();
     }
 }

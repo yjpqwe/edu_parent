@@ -1,8 +1,10 @@
 package com.yjp.eduservice.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yjp.commonutils.R;
 import com.yjp.eduservice.entity.EduCourse;
+import com.yjp.eduservice.entity.EduVideo;
 import com.yjp.eduservice.entity.vo.CourseInfoVo;
 import com.yjp.eduservice.entity.vo.CoursePublishVo;
 import com.yjp.eduservice.service.EduCourseService;
