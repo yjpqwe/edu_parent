@@ -5,6 +5,7 @@ import com.yjp.commonutils.R;
 import com.yjp.eduservice.client.VodClient;
 import com.yjp.eduservice.entity.EduVideo;
 import com.yjp.eduservice.service.EduVideoService;
+import com.yjp.servicebase.exceptionhandler.YjpException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +42,10 @@ public class EduVideoController {
         //判断小节中是否有视频id
         if(!StringUtils.isEmpty(videoSourceId)){
             //根据视频id远程调用实现视频删除
-            vodClient.removeAlyVideo(videoSourceId);
+            R result = vodClient.removeAlyVideo(videoSourceId);
+            if(result.getCode() == 20001){
+                throw new YjpException(20001,"删除视频失败，熔断器。。。");
+            }
         }
         boolean flag = eduVideoService.removeById(id);
         if(flag){
