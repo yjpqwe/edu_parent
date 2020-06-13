@@ -1,9 +1,13 @@
 package com.yjp.educms.controller;
 
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.yjp.commonutils.R;
+import com.yjp.educms.entity.CrmBanner;
+import com.yjp.educms.service.CrmBannerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -17,6 +21,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/educms/banneradmin")
 @CrossOrigin
 public class BannerAdminController {
+    @Autowired
+    private CrmBannerService crmBannerService;
+
+    @GetMapping("pageBanner/{page}/{limit}")
+    public R pageBanner(@PathVariable long page, @PathVariable long limit){
+        Page<CrmBanner> pageBanner = new Page<>(page,limit);
+        crmBannerService.page(pageBanner,null);
+
+        return R.ok();
+    }
+
+    @PostMapping("addBanner")
+    public R addBanner(@RequestBody CrmBanner crmBanner){
+        crmBannerService.save(crmBanner);
+        return R.ok();
+    }
+
 
 }
 
