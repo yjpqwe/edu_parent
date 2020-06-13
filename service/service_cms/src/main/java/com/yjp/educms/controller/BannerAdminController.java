@@ -6,12 +6,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.yjp.commonutils.R;
 import com.yjp.educms.entity.CrmBanner;
 import com.yjp.educms.service.CrmBannerService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
- * 首页banner表 前端控制器
+ * 后台banner接口
  * </p>
  *
  * @author testjava
@@ -22,19 +24,47 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class BannerAdminController {
     @Autowired
-    private CrmBannerService crmBannerService;
+    private CrmBannerService bannerService;
 
-    @GetMapping("pageBanner/{page}/{limit}")
-    public R pageBanner(@PathVariable long page, @PathVariable long limit){
-        Page<CrmBanner> pageBanner = new Page<>(page,limit);
-        crmBannerService.page(pageBanner,null);
+    @ApiOperation(value = "获取Banner分页列表")
+    @GetMapping("{page}/{limit}")
+    public R index(
+            @ApiParam(name = "page", value = "当前页码", required = true)
+            @PathVariable Long page,
 
+            @ApiParam(name = "limit", value = "每页记录数", required = true)
+            @PathVariable Long limit) {
+
+        Page<CrmBanner> banngerPage = new Page<>(page, limit);
+        bannerService.page(banngerPage,null);
+        return R.ok().data("items", banngerPage.getRecords()).data("total", banngerPage.getTotal());
+    }
+
+    @ApiOperation(value = "获取Banner")
+    @GetMapping("get/{id}")
+    public R get(@PathVariable String id) {
+        CrmBanner banner = bannerService.getById(id);
+        return R.ok().data("item", banner);
+    }
+
+    @ApiOperation(value = "新增Banner")
+    @PostMapping("save")
+    public R save(@RequestBody CrmBanner banner) {
+        bannerService.save(banner);
         return R.ok();
     }
 
-    @PostMapping("addBanner")
-    public R addBanner(@RequestBody CrmBanner crmBanner){
-        crmBannerService.save(crmBanner);
+    @ApiOperation(value = "修改Banner")
+    @PutMapping("update")
+    public R updateById(@RequestBody CrmBanner banner) {
+        bannerService.updateById(banner);
+        return R.ok();
+    }
+
+    @ApiOperation(value = "删除Banner")
+    @DeleteMapping("remove/{id}")
+    public R remove(@PathVariable String id) {
+        bannerService.removeById(id);
         return R.ok();
     }
 
