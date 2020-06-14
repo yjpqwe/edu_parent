@@ -21,7 +21,7 @@ import java.util.List;
  * @since 2020-06-13
  */
 @RestController
-@RequestMapping("/educms/bannerfront")
+@RequestMapping("/cmsservice/bannerfront")
 @CrossOrigin
 public class BannerFrontController {
     @Autowired
