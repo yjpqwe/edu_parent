@@ -21,7 +21,7 @@ import java.util.List;
 @Service
 public class CrmBannerServiceImpl extends ServiceImpl<CrmBannerMapper, CrmBanner> implements CrmBannerService {
 
-    @Cacheable(value = "banner",key = "'selectIndexList'")
+//    @Cacheable(value = "banner",key = "'selectIndexList'")
     @Override
     public List<CrmBanner> selectAllBanner() {
         QueryWrapper<CrmBanner> wrapper = new QueryWrapper<>();
