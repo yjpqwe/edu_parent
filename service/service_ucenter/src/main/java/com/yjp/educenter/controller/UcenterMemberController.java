@@ -22,7 +22,7 @@ public class UcenterMemberController {
     @Autowired
     private UcenterMemberService memberService;
     //登录
-    @PostMapping("login")
+    @GetMapping("login")
     public R loginUser(@RequestBody UcenterMember member) {
         //member对象封装手机号和密码
         //调用service方法实现登录
