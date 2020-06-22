@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.yjp.commonutils.JwtUtils;
 import com.yjp.commonutils.MD5;
 import com.yjp.educenter.entity.UcenterMember;
+import com.yjp.educenter.entity.vo.RegisterVo;
 import com.yjp.educenter.mapper.UcenterMemberMapper;
 import com.yjp.educenter.service.UcenterMemberService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -58,5 +59,24 @@ public class UcenterMemberServiceImpl extends ServiceImpl<UcenterMemberMapper, U
         String jwtToken = JwtUtils.getJwtToken(mobileMember.getId(), mobileMember.getNickname());
 
         return jwtToken;
+    }
+
+    //注册的方法
+    @Override
+    public void register(RegisterVo registerVo) {
+        //获取注册的数据
+        String code = registerVo.getCode();//验证码
+        String mobile = registerVo.getMobile();//手机号
+        String nickname = registerVo.getNickname();//昵称
+        String password = registerVo.getPassword();//密码
+
+        //非空判断
+        if(StringUtils.isEmpty(mobile) || StringUtils.isEmpty(password)
+                || StringUtils.isEmpty(code) || StringUtils.isEmpty(nickname)){
+            throw new YjpException(20001,"注册失败");
+        }
+
+        //判断手机的验证码
+
     }
 }
