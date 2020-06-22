@@ -6,6 +6,7 @@ import com.yjp.educenter.entity.UcenterMember;
 import com.yjp.educenter.entity.vo.RegisterVo;
 import com.yjp.educenter.service.UcenterMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -22,6 +23,9 @@ import org.springframework.web.bind.annotation.*;
 public class UcenterMemberController {
     @Autowired
     private UcenterMemberService memberService;
+
+    @Autowired
+    private RedisTemplate<String,String> redisTemplate;
     //登录
     @PostMapping("login")
     public R loginUser(@RequestBody UcenterMember member) {
