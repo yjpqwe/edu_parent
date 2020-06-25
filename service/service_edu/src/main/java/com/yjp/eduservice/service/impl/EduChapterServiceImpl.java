@@ -1,15 +1,14 @@
 package com.yjp.eduservice.service.impl;
 
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yjp.eduservice.entity.EduChapter;
-import com.yjp.eduservice.entity.EduCourse;
 import com.yjp.eduservice.entity.EduVideo;
 import com.yjp.eduservice.entity.chapter.ChapterVo;
 import com.yjp.eduservice.entity.chapter.VideoVo;
-import com.yjp.eduservice.entity.vo.CourseInfoVo;
 import com.yjp.eduservice.mapper.EduChapterMapper;
 import com.yjp.eduservice.service.EduChapterService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.yjp.eduservice.service.EduVideoService;
 import com.yjp.servicebase.exceptionhandler.YjpException;
 import org.springframework.beans.BeanUtils;

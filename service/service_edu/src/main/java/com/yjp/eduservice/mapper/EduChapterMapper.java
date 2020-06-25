@@ -1,7 +1,8 @@
 package com.yjp.eduservice.mapper;
 
-import com.yjp.eduservice.entity.EduChapter;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.yjp.eduservice.entity.EduChapter;
+
 
 /**
  * <p>
@@ -9,7 +10,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author testjava
- * @since 2020-05-13
+ * @since 2020-03-02
  */
 public interface EduChapterMapper extends BaseMapper<EduChapter> {
 
