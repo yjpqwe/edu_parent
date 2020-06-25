@@ -40,6 +40,13 @@ public class EduTeacherServiceImpl extends ServiceImpl<EduTeacherMapper, EduTeac
 
         //把分页数据获取出来，放到map集合
         Map<String,Object> map = new HashMap<>();
-        return null;
+        map.put("items", records);
+        map.put("current", current);
+        map.put("pages", pages);
+        map.put("size", size);
+        map.put("total", total);
+        map.put("hasNext", hasNext);
+        map.put("hasPrevious", hasPrevious);
+        return map;
     }
 }
