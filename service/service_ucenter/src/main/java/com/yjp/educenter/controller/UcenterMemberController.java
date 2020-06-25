@@ -1,6 +1,7 @@
 package com.yjp.educenter.controller;
 
 
+import com.yjp.commonutils.JwtUtils;
 import com.yjp.commonutils.R;
 import com.yjp.educenter.entity.UcenterMember;
 import com.yjp.educenter.entity.vo.RegisterVo;
@@ -8,6 +9,8 @@ import com.yjp.educenter.service.UcenterMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <p>
@@ -40,6 +43,15 @@ public class UcenterMemberController {
     public R registerUser(@RequestBody RegisterVo registerVo){
         memberService.register(registerVo);
         return R.ok();
+    }
+
+    //根据token获取用户信息
+    @GetMapping("getMemberInfo")
+    public R getMemberInfo(HttpServletRequest request){
+        String memberIdByJwtToken = JwtUtils.getMemberIdByJwtToken(request);
+        //查询数据库根据用户id获取用户信息
+        UcenterMember ucenterMember = memberService.getById(memberIdByJwtToken);
+        return R.ok().data("userInfo",ucenterMember);
     }
 }
 
